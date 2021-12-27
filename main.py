@@ -7,7 +7,18 @@ import color
 import exceptions
 import setup_game
 import input_handlers
+import threading
 
+from playsound import playsound
+
+def loopSound():
+    while True:
+        playsound('maintheme.mp3', block=True)
+
+# providing a name for the thread improves usefulness of error messages.
+loopThread = threading.Thread(target=loopSound, name='backgroundMusicThread')
+loopThread.daemon = True # shut down music thread when the rest of the program exits
+loopThread.start()
 
 def save_game(handler: input_handlers.BaseEventHandler, filename: str) -> None:
     """If the current event handler has an active Engine then save it."""

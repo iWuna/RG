@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import os
 
-from typing import Callable, Optional, Tuple, TYPE_CHECKING, Union
+from playsound import playsound
+from typing import Any, Callable, Optional, Tuple, TYPE_CHECKING, Union
 
 import tcod
 
@@ -129,6 +130,7 @@ class EventHandler(BaseEventHandler):
                 # The player was killed sometime during or after the action.
                 return GameOverEventHandler(self.engine)
             elif self.engine.player.level.requires_level_up:
+                playsound('lvlup.mp3', block=False)
                 return LevelUpEventHandler(self.engine)
             return MainGameEventHandler(self.engine)  # Return to the main handler.
         return self
